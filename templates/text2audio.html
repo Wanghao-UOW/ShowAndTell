@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show and Tell</title>
+    <style>
+        div{
+        width: 500px;
+        height: auto;
+        border:solid 3px black;
+        margin: auto;
+        }
+        input[type ='text']{
+            width:490px;
+            font-size:20px;
+        }
+        input[type ='submit']:hover{
+            background-color: green;
+            color: white;
+
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <center><h4>Image to Speech</h4></center>
+        <form method="POST" action ="audio" enctype="multipart/form-data">
+            <input type="file" name="image">
+            <center><input type = "submit"></center>
+        </form>
+
+        <br /> <br />
+
+        {{text}}
+        <br/>
+        <p>image:</p>
+        {% block content %} 
+        {% if image_obj %}              
+            <img src="{{ image_obj.image.url}}" alt="your image" style="max-height:300px">  
+        {% endif %}  
+        {% endblock content %} 
+    </div>
+</body>
+</html>
