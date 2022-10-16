@@ -14,9 +14,11 @@ from .forms import OFAImageForm
 import os
 from datetime import datetime
 
+
+# img_captioning = pipeline(Tasks.image_captioning, model='ofa_image-caption_coco_large_en')
 img_captioning = pipeline(Tasks.image_captioning, model='damo/ofa_image-caption_coco_distilled_en')
-#result = img_captioning({'image': 'https://farm9.staticflickr.com/8044/8145592155_4a3e2e1747_z.jpg'})
-#print(result[OutputKeys.CAPTION]) # 'a bunch of donuts on a wooden board with popsicle sticks'
+# result = img_captioning({'image': 'https://farm9.staticflickr.com/8044/8145592155_4a3e2e1747_z.jpg'})
+# print(result[OutputKeys.CAPTION]) # 'a bunch of donuts on a wooden board with popsicle sticks'
 
 @csrf_exempt
 def index(request):
@@ -33,7 +35,7 @@ def caption(request):
             img_object = form.instance 
             
             # OFA Image Caption from pre-trained
-            result = img_captioning({'image': 'https://farm9.staticflickr.com/8044/8145592155_4a3e2e1747_z.jpg'})
+            result = img_captioning({'image': img_object.image.name})
             end_time = datetime.now()
             time_lapsed =  end_time - start_time
             # format time
