@@ -1,0 +1,10 @@
+pyttsx3~=2.90
+django~=3.2.16
+torch~=1.12.1
+torchvision~=0.13.1
+keras~=2.10.0
+tensorflow
+matplotlib~=3.5.3
+opencv-python~=4.6.0.66
+numpy~=1.21.6
+Pillow~=9.2.0
