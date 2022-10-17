@@ -15,13 +15,21 @@ import os
 from datetime import datetime
 
 
-# img_captioning = pipeline(Tasks.image_captioning, model='ofa_image-caption_coco_large_en')
-img_captioning = pipeline(Tasks.image_captioning, model='damo/ofa_image-caption_coco_distilled_en')
+# img_captioning = pipeline(
+#   Tasks.image_captioning, 
+#   model='ofa_image-caption_coco_large_en')
+img_captioning = pipeline(
+    Tasks.image_captioning, 
+    model='damo/ofa_image-caption_coco_distilled_en')
 # result = img_captioning({'image': 'https://farm9.staticflickr.com/8044/8145592155_4a3e2e1747_z.jpg'})
 # print(result[OutputKeys.CAPTION]) # 'a bunch of donuts on a wooden board with popsicle sticks'
 
 @csrf_exempt
 def index(request):
+    return render(request, 'index.html')
+    
+@csrf_exempt
+def ofa(request):
     return render(request, 'OFA.html')
 
 @csrf_exempt
@@ -40,14 +48,27 @@ def caption(request):
             time_lapsed =  end_time - start_time
             # format time
             t = str(round(time_lapsed.total_seconds(),1))+'s'
-            return render(request, 'OFA.html', {'form': form, 'img_obj': img_object, 'result': result[OutputKeys.CAPTION][0], 'time_lapsed': t})  
+            # data will send to frontend
+            context = {
+                'form': form, 
+                'img_obj': img_object, 
+                'result': result[OutputKeys.CAPTION][0], 
+                'time_lapsed': t
+            }
+            return render(request, 'OFA.html', context)  
     else:
         form = OFAImageForm()
     end_time = datetime.now()
     time_lapsed = end_time - start_time
     # format time
     t = str(round(time_lapsed.total_seconds(),1))+'s'
-    return render(request, 'OFA.html', {'form' : form,  'result': 'No valid Image!', 'time_lapsed': t})
+    # data will send to frontend
+    context = {
+        'form' : form,  
+        'result': 'No valid Image!', 
+        'time_lapsed': t
+    }
+    return render(request, 'OFA.html', context)
 
 """ @csrf_exempt
 def caption1(request):
