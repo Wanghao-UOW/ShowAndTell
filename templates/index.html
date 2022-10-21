@@ -30,10 +30,10 @@
     <meta property="og:type" content="website">
   </head>
   <body data-home-page="Home.html" data-home-page-title="Home" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-164b"><div class="u-clearfix u-sheet u-sheet-1">
-        <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="870" data-image-height="870">
+        <a href="{% url 'index' %}" class="u-image u-logo u-image-1" data-image-width="870" data-image-height="870">
           <img src="images/UOW.png" class="u-logo-image u-logo-image-1">
         </a>
-        <a href="https://nicepage.com" class="u-image u-logo u-image-2" data-image-width="200" data-image-height="200">
+        <a href="{% url 'index' %}" class="u-image u-logo u-image-2" data-image-width="200" data-image-height="200">
           <img src="images/1663124232782.jpg" class="u-logo-image u-logo-image-2">
         </a>
         <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
@@ -45,9 +45,9 @@
             </a>
           </div>
           <div class="u-nav-container">
-            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Home.html" style="padding: 10px 14px;">Home</a>
-            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="About.html" style="padding: 10px 14px;">About</a>
-            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="ofa" target="_blank" style="padding: 10px 14px;">Model</a>
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'index' %}" style="padding: 10px 14px;">Home</a>
+            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'about' %}" style="padding: 10px 14px;">About</a>
+            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'model' %}" target="_blank" style="padding: 10px 14px;">Model</a>
             </li></ul>
           </div>
           <div class="u-nav-container-collapse">
@@ -107,7 +107,7 @@
               <div class="u-align-center u-container-style u-layout-cell u-size-30 u-layout-cell-2">
                 <div class="u-container-layout u-container-layout-2">
                   <h2 class="u-text u-text-default u-text-2"> Our AI-Powered model is capbe to generate comprehensive sentence from image</h2>
-                  <a href="http://web.archive.org/web/20001102203936/http%3A//3m.com/meetingnetwork/files/meetingguide_pres.pdf" class="u-btn u-button-style u-hover-black u-palette-1-base u-btn-1" target="_blank">try it now</a>
+                  <a href="{% url 'model' %}" class="u-btn u-button-style u-hover-black u-palette-1-base u-btn-1" target="_blank">try it now</a>
                 </div>
               </div>
             </div>

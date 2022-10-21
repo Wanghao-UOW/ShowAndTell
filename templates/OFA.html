@@ -159,11 +159,11 @@
 
     </script>
 </head>
-<body data-home-page="Home.html" data-home-page-title="Home" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-164b"><div class="u-clearfix u-sheet u-sheet-1">
-    <a href="Home.html" class="u-image u-logo u-image-1" data-image-width="870" data-image-height="870">
+<body data-home-page="OFA.html" data-home-page-title="Home" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-164b"><div class="u-clearfix u-sheet u-sheet-1">
+    <a href="{% url 'index' %}" class="u-image u-logo u-image-1" data-image-width="870" data-image-height="870">
         <img src="images/UOW.png" class="u-logo-image u-logo-image-1">
       </a>
-      <a href="Home.html" class="u-image u-logo u-image-2" data-image-width="200" data-image-height="200">
+      <a href="{% url 'index' %}" class="u-image u-logo u-image-2" data-image-width="200" data-image-height="200">
         <img src="images/1663124232782.jpg" class="u-logo-image u-logo-image-2">
       </a>
       <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
@@ -175,10 +175,17 @@
           </a>
         </div>
         <div class="u-nav-container">
-            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Home.html" style="padding: 10px 14px;">Home</a>
-            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="About.html" style="padding: 10px 14px;">About</a>
-            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="ofa" target="_blank" style="padding: 10px 14px;">Model</a>
-            </li></ul>
+            <ul class="u-nav u-unstyled u-nav-1">
+                <li class="u-nav-item">
+                    <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'index' %}" style="padding: 10px 14px;">Home</a>
+                </li>
+                <li class="u-nav-item">
+                    <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'about' %}" style="padding: 10px 14px;">About</a>
+                </li>
+                <li class="u-nav-item">
+                    <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'model' %}" style="padding: 10px 14px;">Model</a>
+                </li>
+            </ul>
         </div>
         <div class="u-nav-container-collapse">
           <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
@@ -196,42 +203,49 @@
     <center><h4>OFA (pre-trained)</h4>
     <div style="width: 100%; overflow: hidden;">
 
-        <div style="width: 50%; float: left;">  
-            <br>
-            <form method="POST" action ="caption" enctype="multipart/form-data">
-                <div class="file-droppable" >
-                    <br>
-                    <div id = 'outputText' style="font-size: 22px; color: grey; font-family: Verdana, sans-serif;">
-                        Drop Image Here 
+        <form method="POST" action ="Model" enctype="multipart/form-data">
+            {% comment %} <p>Please select your OFA model: </p>
+            <input type="radio" id="OFADistilled" name="OFA" value="OFA_Distilled">
+            <label for="OFADistilled">Distilled</label>
+            <input type="radio" id="OFALarge" name="OFA" value="OFA_Large">
+            <label for="OFALarge">Large</label>
+            <input type="radio" id="OFATiny" name="OFA" value="OFA_Tiny">
+            <label for="OFATiny">Tiny</label><br> {% endcomment %}
+            <div style="width: 50%; float: left;">                  
+                {% block content %}       
+                {% csrf_token %}  
+                <br>            
+                    <div class="file-droppable" >
                         <br>
-                        - or -
-                        <br> 
-                        Click to Upload
-                    </div>  
+                        <div id = 'outputText' style="font-size: 22px; color: grey; font-family: Verdana, sans-serif;">
+                            Drop Image Here 
+                            <br>
+                            - or -
+                            <br> 
+                            Click to Upload
+                        </div>  
+                        <br>
+                        <img id="output" src = " " />  
+                        <span>&times;</span>  
+                        <input type="file" name="image" onchange="loadFile(event)" > 
+                        <br><br>         
+                    </div>
                     <br>
-                    <img id="output" src = " " />  
-                    <span>&times;</span>  
-                    <input type="file" name="image" onchange="loadFile(event)" > 
-                    <br><br>         
-                </div>
-                <br>
-                <div>
-                    <input type = "reset" onclick = "removeImage()" value = "Clear" >
-                    <input type = "submit" >
-                </div>
-            </form>
-        </div> 
+                    <div>
+                        <input type = "reset" onclick = "removeImage()" value = "Clear" >
+                        <input type = "submit" >
+                    </div>                
+            </div> 
 
-        <div style="width: 50%; float: right;">
-            {% block content %}       
-            {% csrf_token %}                
-            {% if img_obj %}          
-                <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">  
-            {% endif %}  
-            {% endblock content %} 
-            <p><strong>Caption: </strong> {{result}}</p>                    
-            <p><strong>Timing: </strong> {{time_lapsed}}</p>
-        </div>      
+            <div style="width: 50%; float: right;">              
+                {% if img_obj %}          
+                    <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">  
+                {% endif %}  
+                {% endblock content %} 
+                <p><strong>Caption: </strong> {{result}}</p>                    
+                <p><strong>Timing: </strong> {{time_lapsed}}</p>
+            </div>  
+        </form>    
     </div>
     <footer class="u-align-center u-clearfix u-footer u-white u-footer" id="sec-b946"><div class="u-clearfix u-sheet u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">Copyright © 2022 FYP-22-S3-05P</p>

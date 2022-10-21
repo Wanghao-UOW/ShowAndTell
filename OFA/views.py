@@ -27,13 +27,17 @@ img_captioning = pipeline(
 @csrf_exempt
 def index(request):
     return render(request, 'index.html')
-    
-@csrf_exempt
-def ofa(request):
-    return render(request, 'OFA.html')
 
 @csrf_exempt
-def caption(request):
+def about(request):
+    return render(request, 'about.html')
+
+# @csrf_exempt
+# def model(request):
+#     return render(request, 'OFA.html')
+
+@csrf_exempt
+def model(request):
     start_time = datetime.now()
     if request.method == 'POST':            
         # Image Display
