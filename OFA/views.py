@@ -15,14 +15,14 @@ import os
 from datetime import datetime
 
 # better accuracy but slower 
-# img_captioning = pipeline(
-#   Tasks.image_captioning, 
-#   model='OFA/ofa_image-caption_coco_large_en')
+img_captioning = pipeline(
+  Tasks.image_captioning, 
+  model='OFA/ofa_image-caption_coco_large_en')
 
 # lower accuracy but very fast
-img_captioning = pipeline(
-    Tasks.image_captioning, 
-    model='damo/ofa_image-caption_coco_distilled_en')
+# img_captioning = pipeline(
+#     Tasks.image_captioning, 
+#     model='damo/ofa_image-caption_coco_distilled_en')
 
 # result = img_captioning({'image': 'https://farm9.staticflickr.com/8044/8145592155_4a3e2e1747_z.jpg'})
 # print(result[OutputKeys.CAPTION]) # 'a bunch of donuts on a wooden board with popsicle sticks'
