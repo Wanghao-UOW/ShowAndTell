@@ -201,7 +201,7 @@
       </nav>
     </div></header>
     <center><h4>OFA (pre-trained)</h4>
-    <div style="width: 100%; overflow: hidden;">
+    <div style="width: 70%; overflow: hidden;">
 
         <form method="POST" action ="Model" enctype="multipart/form-data">
             {% comment %} <p>Please select your OFA model: </p>
@@ -211,7 +211,7 @@
             <label for="OFALarge">Large</label>
             <input type="radio" id="OFATiny" name="OFA" value="OFA_Tiny">
             <label for="OFATiny">Tiny</label><br> {% endcomment %}
-            <div style="width: 50%; float: left;">                  
+            <div style="width: 40%; float: left;">                  
                 {% block content %}       
                 {% csrf_token %}  
                 <br>            
@@ -227,7 +227,7 @@
                         <br>
                         <img id="output" src = " " />  
                         <span>&times;</span>  
-                        <input type="file" name="image" onchange="loadFile(event)" > 
+                        <input type="file" accept="image/*" name="image" onchange="loadFile(event)" > 
                         <br><br>         
                     </div>
                     <br>
@@ -237,13 +237,22 @@
                     </div>                
             </div> 
 
-            <div style="width: 50%; float: right;">              
+            <div style="width: 50%; float: right;">
                 {% if img_obj %}          
                     <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">  
                 {% endif %}  
-                {% endblock content %} 
-                <p><strong>Caption: </strong> {{result}}</p>                    
-                <p><strong>Timing: </strong> {{time_lapsed}}</p>
+                {% endblock content %}  
+                <br>                   
+                <small>processing: {{time_lapsed}}</small> 
+                <br>   
+                <br> 
+                <div>
+                    <audio controls preload="none"> 
+                        <source src="audio.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p><strong>Caption: </strong> {{result}}</p>
+                </div>  
             </div>  
         </form>    
     </div>

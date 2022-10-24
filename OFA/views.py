@@ -14,13 +14,16 @@ from .forms import OFAImageForm
 import os
 from datetime import datetime
 
-
+# better accuracy but slower 
 # img_captioning = pipeline(
 #   Tasks.image_captioning, 
-#   model='ofa_image-caption_coco_large_en')
+#   model='OFA/ofa_image-caption_coco_large_en')
+
+# lower accuracy but very fast
 img_captioning = pipeline(
     Tasks.image_captioning, 
     model='damo/ofa_image-caption_coco_distilled_en')
+
 # result = img_captioning({'image': 'https://farm9.staticflickr.com/8044/8145592155_4a3e2e1747_z.jpg'})
 # print(result[OutputKeys.CAPTION]) # 'a bunch of donuts on a wooden board with popsicle sticks'
 
@@ -32,14 +35,20 @@ def index(request):
 def about(request):
     return render(request, 'about.html')
 
-# @csrf_exempt
-# def model(request):
-#     return render(request, 'OFA.html')
 
+caption = "No Caption!"
 @csrf_exempt
 def model(request):
     start_time = datetime.now()
-    if request.method == 'POST':            
+    if request.method == 'POST': 
+
+        # Remove all old images
+        directory = "OFA/static"
+        files_in_directory = os.listdir(directory)
+        for file in files_in_directory:
+            path_to_file = os.path.join(directory, file)
+            os.remove(path_to_file)
+
         # Image Display
         form = OFAImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -48,10 +57,21 @@ def model(request):
             
             # OFA Image Caption from pre-trained
             result = img_captioning({'image': img_object.image.name})
+            global caption
+            caption = result[OutputKeys.CAPTION][0]
+
+            # Save audio file
+            engine = pyttsx3.init()
+            engine.save_to_file(caption, 'OFA/audio.mp3')
+            engine.runAndWait()
+
+            # timer
             end_time = datetime.now()
             time_lapsed =  end_time - start_time
+
             # format time
             t = str(round(time_lapsed.total_seconds(),1))+'s'
+
             # data will send to frontend
             context = {
                 'form': form, 
@@ -62,10 +82,14 @@ def model(request):
             return render(request, 'OFA.html', context)  
     else:
         form = OFAImageForm()
+    
+    # timer
     end_time = datetime.now()
     time_lapsed = end_time - start_time
+
     # format time
     t = str(round(time_lapsed.total_seconds(),1))+'s'
+
     # data will send to frontend
     context = {
         'form' : form,  
@@ -88,3 +112,4 @@ def caption1(request):
     }
     return render(request, 'OFA.html', context)
  """
+    
