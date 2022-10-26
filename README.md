@@ -1,20 +1,31 @@
-python -m venv venv
 
-.\venv\Scripts\activate
+## Installtion (Windows 10):
 
-python -m pip install --upgrade pip==22.3
+    ### Download Tiny (Distilled) Model from below Google Drive manually and copy to OFA folder
+    https://drive.google.com/drive/folders/1jpP-KNabBPAyOoDkj_U57GkpR4JBjMV0?usp=sharing
 
-pip install -r requirements.txt
+    ### OR 
 
-pip install "modelscope[nlp]==0.4.7" -f https://modelscope.oss-cn-beijing.aliyuncs.com/releases/repo.html
+    ### Download Large Model from below Google Drive manually and copy to OFA folder
+    https://drive.google.com/drive/folders/1p__3PShIX6KbKBIyERSX9jrsUEN1hoR5?usp=sharing 
 
-Download Large Model from below Google Drive manually and overwrite the same folder in OFA
-https://drive.google.com/drive/folders/1p__3PShIX6KbKBIyERSX9jrsUEN1hoR5?usp=sharing 
+    #### Tiny is faster with reasonable accuracy of text caption while large is much slower with much higher accuracy of text caption
 
-pip install git+https://github.com/nateshmbhat/pyttsx3
+## Option 1 (using existing virtual environment): 
 
-python manage.py makemigrations
+    ### Download venv below and unzip to ShowAndTell folder
+    https://drive.google.com/file/d/1fTqD683dpdwtGnUMyQc3tLraZK7Ymj2G/view?usp=sharing
 
-python manage.py migrate
+    ### Run below commands
+    .\venv\Scripts\activate
+    python manage.py runserver
 
-python manage.py runserver
+
+## Option 2 (manually install packages): 
+    python -m venv venv
+    .\venv\Scripts\activate
+    python -m pip install --upgrade pip==22.3
+    pip install -r requirements.txt
+    pip install "modelscope[nlp]==0.4.7" -f https://modelscope.oss-cn-beijing.aliyuncs.com/releases/repo.html
+    pip install git+https://github.com/nateshmbhat/pyttsx3
+    python manage.py runserver
