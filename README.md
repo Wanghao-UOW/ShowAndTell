@@ -1,10 +1,10 @@
 
 ## Installtion (Windows 10):
-Download Tiny (Distilled) Model from below Google Drive manually and copy to OFA folder https://drive.google.com/drive/folders/1jpP-KNabBPAyOoDkj_U57GkpR4JBjMV0?usp=sharing
+Download Tiny (Distilled) Model from below Google Drive manually and copy to [OFA](https://github.com/Wanghao-UOW/ShowAndTell/tree/main/OFA) folder https://drive.google.com/drive/folders/1jpP-KNabBPAyOoDkj_U57GkpR4JBjMV0?usp=sharing
 
 OR 
 
-Download Large Model from below Google Drive manually and copy to OFA folder
+Download Large Model from below Google Drive manually and copy to [OFA](https://github.com/Wanghao-UOW/ShowAndTell/tree/main/OFA) folder
 https://drive.google.com/drive/folders/1p__3PShIX6KbKBIyERSX9jrsUEN1hoR5?usp=sharing
 
 ###### Tiny is faster with reasonable accuracy of text caption while large is much slower with much higher accuracy of text caption
