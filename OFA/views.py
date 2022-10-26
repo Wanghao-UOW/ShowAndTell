@@ -1,4 +1,6 @@
 from logging import exception
+from pickle import EMPTY_LIST
+from queue import Empty
 from django.shortcuts import render 
 from modelscope.pipelines import pipeline
 from modelscope.utils.constant import Tasks
@@ -15,14 +17,14 @@ import os
 from datetime import datetime
 
 # better accuracy but slower 
-img_captioning = pipeline(
-  Tasks.image_captioning, 
-  model='OFA/ofa_image-caption_coco_large_en')
+# img_captioning = pipeline(
+#   Tasks.image_captioning, 
+#   model='OFA/ofa_image-caption_coco_large_en')
 
 # lower accuracy but very fast
-# img_captioning = pipeline(
-#     Tasks.image_captioning, 
-#     model='damo/ofa_image-caption_coco_distilled_en')
+img_captioning = pipeline(
+    Tasks.image_captioning, 
+    model='OFA/ofa_image-caption_coco_distilled_en')
 
 # result = img_captioning({'image': 'https://farm9.staticflickr.com/8044/8145592155_4a3e2e1747_z.jpg'})
 # print(result[OutputKeys.CAPTION]) # 'a bunch of donuts on a wooden board with popsicle sticks'
@@ -45,9 +47,10 @@ def model(request):
         # Remove all old images
         directory = "OFA/static"
         files_in_directory = os.listdir(directory)
-        for file in files_in_directory:
-            path_to_file = os.path.join(directory, file)
-            os.remove(path_to_file)
+        if(files_in_directory):
+            for file in files_in_directory:
+                path_to_file = os.path.join(directory, file)
+                os.remove(path_to_file)
 
         # Image Display
         form = OFAImageForm(request.POST, request.FILES)
@@ -59,10 +62,19 @@ def model(request):
             result = img_captioning({'image': img_object.image.name})
             global caption
             caption = result[OutputKeys.CAPTION][0]
-
+            
+            # Remove all old audio
+            directory = "OFA/media"
+            files_in_directory = os.listdir(directory)
+            if(files_in_directory):
+                for file in files_in_directory:
+                    path_to_file = os.path.join(directory, file)
+                    os.remove(path_to_file)
+            
             # Save audio file
+            audio_file=str(img_object.image.name[11: img_object.image.name.find('.')- len(img_object.image.name)]+'.mp3')
             engine = pyttsx3.init()
-            engine.save_to_file(caption, 'OFA/audio.mp3')
+            engine.save_to_file(caption, 'OFA/media/'+audio_file)
             engine.runAndWait()
 
             # timer
@@ -77,7 +89,8 @@ def model(request):
                 'form': form, 
                 'img_obj': img_object, 
                 'result': result[OutputKeys.CAPTION][0], 
-                'time_lapsed': t
+                'time_lapsed': t,
+                'audio_filename': audio_file
             }
             return render(request, 'OFA.html', context)  
     else:
