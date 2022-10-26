@@ -20,10 +20,10 @@ Run below commands:
 
 
 ## Option 2 (manually install packages): 
-*python -m venv venv
-.\venv\Scripts\activate
-python -m pip install --upgrade pip==22.3
-pip install -r requirements.txt
-pip install "modelscope[nlp]==0.4.7" -f https://modelscope.oss-cn-beijing.aliyuncs.com/releases/repo.html
-pip install git+https://github.com/nateshmbhat/pyttsx3
-python manage.py runserver*
+    *python -m venv venv
+    .\venv\Scripts\activate
+    python -m pip install --upgrade pip==22.3
+    pip install -r requirements.txt
+    pip install "modelscope[nlp]==0.4.7" -f https://modelscope.oss-cn-beijing.aliyuncs.com/releases/repo.html
+    pip install git+https://github.com/nateshmbhat/pyttsx3
+    python manage.py runserver*
