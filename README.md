@@ -15,8 +15,8 @@ Download venv below and unzip to ShowAndTell folder
 https://drive.google.com/file/d/1fTqD683dpdwtGnUMyQc3tLraZK7Ymj2G/view?usp=sharing
 
 Run below commands:
-*.\venv\Scripts\activate*
-*python manage.py runserver*
+    .\venv\Scripts\activate
+    python manage.py runserver
 
 
 ## Option 2 (manually install packages): 
