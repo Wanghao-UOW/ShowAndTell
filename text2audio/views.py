@@ -190,6 +190,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 import os
 from django.conf import settings
+from datetime import datetime
 
 from .forms import T2SForm
 # Create your views here.
@@ -199,6 +200,7 @@ def textaudio(request):
 
 @csrf_exempt
 def text2audio(request):
+    start_time = datetime.now()
     if request.method == 'POST':    
         form = T2SForm(request.POST, request.FILES)
         if form.is_valid():
@@ -230,8 +232,39 @@ def text2audio(request):
 
             sound = " ".join(soundArray)
 
-            obj = pyttsx3.init()
-            obj.say(sound)
-            obj.runAndWait()
+            # Remove all old audio
+            directory = "text2audio/media"
+            files_in_directory = os.listdir(directory)
+            if(files_in_directory):
+                for file in files_in_directory:
+                    path_to_file = os.path.join(directory, file)
+                    os.remove(path_to_file)
+            
+            # Save audio file
+            audio_file=str(img_object.image.name[11: img_object.image.name.find('.')- len(img_object.image.name)]+'.mp3')
+            engine = pyttsx3.init()
+            engine.save_to_file(sound, 'text2audio/media/'+audio_file)
+            engine.runAndWait()
 
-            return render(request, 'text2audio.html', {'text': sound, 'image_obj': img_object})
+            # timer
+            end_time = datetime.now()
+            time_lapsed =  end_time - start_time
+            t = str(round(time_lapsed.total_seconds(),1))+'s'
+
+            return render(request, 'text2audio.html', {'form': form,  'img_obj': img_object,'audio_filename': audio_file, 'result': sound, 'time_lapsed': t})
+    else:
+        form = T2SForm()
+    # timer
+    end_time = datetime.now()
+    time_lapsed = end_time - start_time
+
+    # format time
+    t = str(round(time_lapsed.total_seconds(),1))+'s'
+
+    # data will send to frontend
+    context = {
+        'form' : form,  
+        'result': 'No valid Image!', 
+        'time_lapsed': t
+    }
+    return render(request, 'text2audio.html', context)

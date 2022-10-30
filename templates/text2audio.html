@@ -1,3 +1,271 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="INTUITIVE, Sciencefor Kids">
+    <meta name="description" content="">
+    <title>Show and Tell</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+    <link rel="stylesheet" href="Home.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 4.19.3, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "images/UOW.png",
+		"sameAs": [
+				"https://github.com/Wanghao-UOW/ShowAndTell"
+		]
+    }</script>
+
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Home">
+    <meta property="og:type" content="website">
+    <style>
+        .file-droppable {
+            background: #d9d5ec;
+            border: dashed 2px #5b537d;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 1s;
+            min-height: 70px;
+            position: relative;
+          }
+        
+        .file-droppable.filled {
+            background: #c5dfdc;
+            border: solid 2px #6faca5;
+            border-radius: 5px;
+        }
+        
+        .file-droppable:after {
+            position: absolute;
+            left: 13px;
+            top: 38px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .file-droppable::before {
+            content: " ";
+            display: inline-block;
+            height: 100%;
+            width: 1%;
+            vertical-align: middle;
+        }
+        
+        .file-droppable div {
+            display: inline-block;
+            vertical-align: middle;
+            padding: 10px;
+            overflow: hidden;
+            word-break: break-all;
+        }
+        
+        .file-droppable span {
+            position: absolute;
+            font-weight: bold;
+            right: 5px;
+            top: -5px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: none;
+        }
+        
+        .file-droppable input {
+            position: absolute;
+            z-index: 3;
+            display: block;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+        }
+        
+        img {
+            display: block;
+            max-width:400px;
+            max-height:300px;
+            width: auto;
+            height: auto;
+        }
+
+        input[type=submit], input[type=reset] {
+            padding:5px 15px; 
+            border:0 none;
+            cursor:pointer;
+            -webkit-border-radius: 5px;
+            border-radius: 5px; 
+            font-size: 20px;
+            font-family: Verdana, sans-serif;
+            width: 200px;
+        }
+          
+    </style>
+    <script>
+
+        {% comment %} drog and drop feature{% endcomment %}
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.file-droppable').forEach(function(droppable) {
+                var originalText = droppable.querySelector('div').innerHTML;
+                var input = droppable.querySelector('input');
+                var image = document.getElementById('output');
+                var fileChanged = function() {
+                    var files = input.files;
+
+                    if (files.length) {
+                        image.src = URL.createObjectURL(event.target.files[0]);
+
+                        droppable.querySelector('span').style.display = 'block';
+                        droppable.querySelector('div').innerHTML = '';
+                        for (var i = 0; i < files.length; i++) {
+                            droppable.querySelector('div').innerHTML += files[i].name + '<br>';
+                        }
+                        droppable.classList.add('filled');
+                    } else {
+                        droppable.querySelector('div').innerHTML = originalText;
+                        droppable.classList.remove('filled');
+                        droppable.querySelector('span').style.display = 'none';
+                        
+                    }
+                };
+                input.addEventListener('change', fileChanged);
+                fileChanged(input);
+                droppable.querySelector('span').addEventListener('click', function() {
+                    input.value = '';
+                    fileChanged(input);
+                    document.getElementById('output').src = ' ';
+                });
+            });
+        }); 
+
+        {% comment %} clean up{% endcomment %}
+        function removeImage() {
+            document.getElementById('output').src = ' ';
+            document.getElementById('output').width = '';
+            document.getElementById('output').height = '';
+            document.getElementById('outputText').innerHTML = 'Drop Image Here <br>- or -<br> Click to Upload';
+        }
+
+    </script>
+</head>
+<body data-home-page="OFA.html" data-home-page-title="Home" class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-164b"><div class="u-clearfix u-sheet u-sheet-1">
+    <a href="{% url 'index' %}" class="u-image u-logo u-image-1" data-image-width="870" data-image-height="870">
+        <img src="images/UOW.png" class="u-logo-image u-logo-image-1">
+      </a>
+      <a href="{% url 'index' %}" class="u-image u-logo u-image-2" data-image-width="200" data-image-height="200">
+        <img src="images/1663124232782.jpg" class="u-logo-image u-logo-image-2">
+      </a>
+      <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+        <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+          <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+            <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+            <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+          </a>
+        </div>
+        <div class="u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1">
+                <li class="u-nav-item">
+                    <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'index' %}" style="padding: 10px 14px;">Home</a>
+                </li>
+                <li class="u-nav-item">
+                    <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'about' %}" style="padding: 10px 14px;">About</a>
+                </li>
+                <li class="u-nav-item">
+                    <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{% url 'model' %}" style="padding: 10px 14px;">Model</a>
+                </li>
+            </ul>
+        </div>
+        <div class="u-nav-container-collapse">
+          <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+            <div class="u-inner-container-layout u-sidenav-overflow">
+              <div class="u-menu-close"></div>
+              <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html">Home</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="About.html">About</a>
+</li></ul>
+            </div>
+          </div>
+          <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+        </div>
+      </nav>
+    </div></header>
+    <center><h4>Text to Audio</h4>
+    <div style="width: 70%; overflow: hidden;">
+
+        <form method="POST"   enctype="multipart/form-data">
+            {% comment %} <p>Please select your OFA model: </p>
+            <input type="radio" id="OFADistilled" name="OFA" value="OFA_Distilled">
+            <label for="OFADistilled">Distilled</label>
+            <input type="radio" id="OFALarge" name="OFA" value="OFA_Large">
+            <label for="OFALarge">Large</label>
+            <input type="radio" id="OFATiny" name="OFA" value="OFA_Tiny">
+            <label for="OFATiny">Tiny</label><br> {% endcomment %}
+            <div style="width: 40%; float: left;">                  
+                {% block content %}       
+                {% csrf_token %}  
+                <br>            
+                    <div class="file-droppable" >
+                        <br>
+                        <div id = 'outputText' style="font-size: 22px; color: grey; font-family: Verdana, sans-serif;">
+                            Drop Image Here 
+                            <br>
+                            - or -
+                            <br> 
+                            Click to Upload
+                        </div>  
+                        <br>
+                        <img id="output" src = " " />  
+                        <span>&times;</span>  
+                        <input type="file" accept="image/*" name="image" onchange="loadFile(event)" > 
+                        <br><br>         
+                    </div>
+                    <br>
+                    <div>
+                        <input type = "reset" onclick = "removeImage()" value = "Clear" >
+                        <input type = "submit" >
+                    </div>                
+            </div> 
+
+            <div style="width: 50%; float: right;">
+                {% if img_obj %}          
+                    <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">  
+                {% endif %}  
+                {% endblock content %}  
+                <br>                   
+                <small>processing: {{time_lapsed}}</small> 
+                <br>   
+                <br> 
+                <div>
+                    <audio controls preload="none"> 
+                        <source src="media/{{audio_filename}}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p><strong>Caption: </strong> {{result}}</p>
+                </div>  
+            </div>  
+        </form>    
+    </div>
+    <footer class="u-align-center u-clearfix u-footer u-white u-footer" id="sec-b946"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">Copyright © 2022 FYP-22-S3-05P</p>
+        <div class="u-social-icons u-spacing-10 u-social-icons-1">
+          <a class="u-social-url" target="_blank" data-type="Custom" title="Github" href="https://github.com/Wanghao-UOW/ShowAndTell"><span class="u-file-icon u-icon u-social-custom u-social-icon u-icon-1"><img src="images/2111432.png" alt=""></span>
+          </a>
+        </div>
+      </div></footer> 
+</body>
+</html>
+{% comment %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,4 +309,4 @@
         {% endblock content %} 
     </div>
 </body>
-</html>
+</html> {% endcomment %}

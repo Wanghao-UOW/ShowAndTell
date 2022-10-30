@@ -20,9 +20,13 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index, name='index'),
+    path('About', views.about, name='about'),
+    path('Model', views.model, name='model'),
     path('text2audio/', include('text2audio.urls')),
     path('OFA/', include('OFA.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
